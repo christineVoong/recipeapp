@@ -1,6 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:recipeapp/Screens/initial_questions.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
+final GoogleSignIn googleSignIn = GoogleSignIn();
+
+Future<String> signInWithGoogle() async {
+  final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+  final GoogleSignInAuthentication googleSignInAuthentication =
+  await googleSignInAccount.authentication;
+
+  final AuthCredential credential = GoogleAuthProvider.credential(
+    accessToken: googleSignInAuthentication.accessToken,
+    idToken: googleSignInAuthentication.idToken,
+  );
+
+  final UserCredential authResult = await _auth.signInWithCredential(credential);
+  final User user = authResult.user;
+
+  assert(!user.isAnonymous);
+  assert(await user.getIdToken() != null);
+
+  final User currentUser = _auth.currentUser;
+  assert(user.uid == currentUser.uid);
+
+  return 'signInWithGoogle succeeded: $user';
+}
 
 class RegistrationScreen extends StatefulWidget {
 
@@ -12,7 +38,7 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
 
-  final _auth = FirebaseAuth.instance;
+  //final _auth = FirebaseAuth.instance;
 
   String email;
   String password;
@@ -109,9 +135,39 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ))
               ),
             ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image(image: AssetImage("images/google_logo.png"), height: 30.0),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5),
+                  child: Material(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30.0),
+                    elevation: 5.0,
+                    child: MaterialButton(
+                      onPressed: () {
+                        signInWithGoogle().whenComplete(() => Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context){
+                              return InitialQuestions();
+                            })
+                        ));
+                      },
+                      minWidth: 200.0,
+                      height: 42.0,
+                      child: Text(
+                        'Sign in With Google',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
           ],
-        )
-      )
+        ),
+      ),
     );
   }
 }

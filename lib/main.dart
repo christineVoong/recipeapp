@@ -15,10 +15,10 @@ import 'Screens/profile_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(recipeApp());
+  runApp(RecipeApp());
 }
 
-class recipeApp extends StatelessWidget{
+class RecipeApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
