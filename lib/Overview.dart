@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:recipeapp/Screens/profile_screen.dart';
 import 'package:recipeapp/Screens/search_screen.dart';
 import 'package:recipeapp/Screens/upload_screen.dart';
-import 'bookmark_screen.dart';
-import 'home_screen.dart';
+import 'Screens/bookmark_screen.dart';
+import 'Screens/home_screen.dart';
 
 class Overview extends StatefulWidget {
 

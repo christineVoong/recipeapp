@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:recipeapp/Screens/Overview.dart';
+import 'package:get/get.dart';
+import 'file:///C:/Users/user/AndroidStudioProjects/recipeapp/lib/Overview.dart';
 import 'package:recipeapp/Screens/initial_questions.dart';
 import 'package:recipeapp/Screens/search_screen.dart';
 import 'Screens/welcome_screen.dart';
@@ -21,7 +22,7 @@ void main() async {
 class RecipeApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
         initialRoute: WelcomeScreen.id,
         routes: {
           WelcomeScreen.id: (context) => WelcomeScreen(),
@@ -34,7 +35,6 @@ class RecipeApp extends StatelessWidget{
           UploadScreen.id: (context) => UploadScreen(),
           BookmarkScreen.id: (context) => BookmarkScreen(),
           ProfileScreen.id: (context) => ProfileScreen(),
-
     }
     );
   }

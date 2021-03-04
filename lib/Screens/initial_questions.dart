@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'Overview.dart';
+import '../Overview.dart';
 
 class InitialQuestions extends StatefulWidget {
   //modifier to associate string with class - dont have to create a whole new object to get the id
@@ -19,6 +19,7 @@ class _InitialQuestionsState extends State<InitialQuestions> {
 
   String email;
   String password;
+  String username;
 
   @override
   void initState() {
@@ -98,15 +99,44 @@ class _InitialQuestionsState extends State<InitialQuestions> {
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                TextField(
+                  textAlign: TextAlign.center,
+                  onChanged: (value) {
+                    username = value;
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Create a Username',
+                    contentPadding:
+                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                      BorderSide(color: Colors.deepOrange[200], width: 1.0),
+                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                      BorderSide(color: Colors.deepOrange[200], width: 2.0),
+                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height:8
+                ),
                 RaisedButton(
                   onPressed: () {
 
                     _firestore.collection('Users').add({
                       'email': loggedInUser.email,
                       'restriction': restrictionChoose,
-                      'username': null,
-                    })
-                    ;
+                      'username': username,
+                    });
 
                     try{
                       final user = _auth.currentUser;
@@ -118,12 +148,9 @@ class _InitialQuestionsState extends State<InitialQuestions> {
                     }
                   },
                   child: Text('Submit'),
-
                 )
               ],
           ),
         ),
   );
-
-
   }
