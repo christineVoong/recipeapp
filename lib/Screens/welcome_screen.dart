@@ -25,6 +25,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               children: <Widget>[
                 Flexible(child: Container(
                   padding: EdgeInsets.all(10),
+                  //title
                   child: Text(
                     'Welcome to RecipEase',
                     textAlign: TextAlign.center,
