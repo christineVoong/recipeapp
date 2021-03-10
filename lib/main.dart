@@ -11,7 +11,7 @@ import 'Screens/upload_screen.dart';
 import 'Screens/bookmark_screen.dart';
 import 'Screens/profile_screen.dart';
 
-
+//App initialisation
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -22,7 +22,9 @@ class RecipeApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      //The welcome screen will appear first
         initialRoute: WelcomeScreen.id,
+      //other screens that are included in this app
         routes: {
           WelcomeScreen.id: (context) => WelcomeScreen(),
           LoginScreen.id: (context) => LoginScreen(),
@@ -34,7 +36,6 @@ class RecipeApp extends StatelessWidget{
           UploadScreen.id: (context) => UploadScreen(),
           BookmarkScreen.id: (context) => BookmarkScreen(),
           ProfileScreen.id: (context) => ProfileScreen(),
-
     }
     );
   }
