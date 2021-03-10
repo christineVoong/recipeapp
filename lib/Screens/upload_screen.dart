@@ -69,6 +69,66 @@ class _UploadScreenState extends State<UploadScreen> {
             SizedBox(
               height: 8.0,
             ),
+            Row(children: [
+              Expanded(
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  onChanged: (value) {
+                    description = value;
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Servings',
+                    contentPadding:
+                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                      BorderSide(color: Colors.grey, width: 1.0),
+                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                      BorderSide(color: Colors.deepOrange[200], width: 2.0),
+                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    ) ,
+                  ),
+                ),
+              ),
+
+              SizedBox(width: 8.0,),
+              Expanded(
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  onChanged: (value) {
+                    description = value;
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Time: hh:mm',
+                    contentPadding:
+                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                      BorderSide(color: Colors.grey, width: 1.0),
+                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                      BorderSide(color: Colors.deepOrange[200], width: 2.0),
+                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    ),
+                  ),
+                ),
+              ),
+            ],),
+            SizedBox(height: 8.0,),
+            SizedBox(
+              height: 8.0,
+            ),
             TextField(
               textAlign: TextAlign.center,
               keyboardType: TextInputType.multiline,
@@ -103,7 +163,22 @@ class _UploadScreenState extends State<UploadScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(
-                  child: TextField(
+                  child: Row(
+                    children: [
+                      Text("Ingredients"),
+                      IconButton(icon: Icon(Icons.add_box),
+                      onPressed:(){
+                        return TextField(
+                            decoration: InputDecoration(
+                            hintText: 'Add Ingredient',
+                            contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 20.0),
+                        ));
+                      }),
+                    ],
+                  ),
+
+                  /*TextField(
                     textAlign: TextAlign.left,
                     //values = ,
                     onChanged: (value) {
@@ -128,7 +203,7 @@ class _UploadScreenState extends State<UploadScreen> {
                         borderRadius: BorderRadius.all(Radius.circular(32.0)),
                       ),
                     ),
-                  ),
+                  ),*/
                 ),
                 SizedBox(
                   width: 8.0,

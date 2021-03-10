@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:recipeapp/DataController.dart';
+import 'file:///C:/Users/user/AndroidStudioProjects/recipeapp/lib/Functions/DataController.dart';
 import 'package:recipeapp/Screens/recipe_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _firestore = FirebaseFirestore.instance;
+  //final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
   //QuerySnapshot snapshot;

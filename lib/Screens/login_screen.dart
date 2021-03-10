@@ -1,33 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'file:///C:/Users/user/AndroidStudioProjects/recipeapp/lib/Overview.dart';
-
-final FirebaseAuth _auth = FirebaseAuth.instance;
-final GoogleSignIn googleSignIn = GoogleSignIn();
-
-Future<String> signInWithGoogle() async {
-  final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-  final GoogleSignInAuthentication googleSignInAuthentication =
-  await googleSignInAccount.authentication;
-
-  final AuthCredential credential = GoogleAuthProvider.credential(
-    accessToken: googleSignInAuthentication.accessToken,
-    idToken: googleSignInAuthentication.idToken,
-  );
-
-  final UserCredential authResult = await _auth.signInWithCredential(credential);
-  final User user = authResult.user;
-
-  assert(!user.isAnonymous);
-  assert(await user.getIdToken() != null);
-
-  final User currentUser = _auth.currentUser;
-  assert(user.uid == currentUser.uid);
-
-  return 'signInWithGoogle succeeded: $user';
-}
+import 'package:recipeapp/Functions/googleSignIn.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id = 'login_screen';
@@ -130,6 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       } catch(e) {
                           setState(() {
                             error = e.message;
+                            showAlert(e) ;
                           });
                         }
                       },
@@ -178,8 +154,8 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget showAlert(){
-    if (error!=null) {
+  Widget showAlert(e){
+    if (e!=null) {
       return Container(
         color: Colors.deepOrange[200],
         width: double.infinity,

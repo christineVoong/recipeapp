@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'recipe_screen.dart';
-import '../DataController.dart';
+import '../Functions/DataController.dart';
 
 class SearchScreen extends StatefulWidget {
   static String id = 'search_screen';
@@ -23,20 +23,22 @@ class _SearchScreenState extends State<SearchScreen> {
       return ListView.builder(
           itemCount: snapshotData.docs.length,
           itemBuilder: (context, index){
-            return ListTile(
-              onTap: (){
-                Get.to(RecipeScreen(),
-                  transition: Transition.downToUp,
-                  arguments: snapshotData.docs[index],
-                );
-              },
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(
-                  snapshotData.docs[index].data()['image']
+            return Card(
+              child: ListTile(
+                onTap: (){
+                  Get.to(RecipeScreen(),
+                    transition: Transition.downToUp,
+                    arguments: snapshotData.docs[index],
+                  );
+                },
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    snapshotData.docs[index].data()['image']
+                  ),
                 ),
+                title: Text(snapshotData.docs[index].data()['name']),
+                subtitle: Text(snapshotData.docs[index].data()['creator']),
               ),
-              title: Text(snapshotData.docs[index].data()['name']),
-              subtitle: Text(snapshotData.docs[index].data()['creator']),
             );
           });
     }

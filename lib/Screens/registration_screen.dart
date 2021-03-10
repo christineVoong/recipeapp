@@ -1,33 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter/services.dart';
+import 'package:recipeapp/Functions/googleSignIn.dart';
 import 'package:recipeapp/Screens/initial_questions.dart';
 import 'package:email_validator/email_validator.dart';
-
-final FirebaseAuth _auth = FirebaseAuth.instance;
-final GoogleSignIn googleSignIn = GoogleSignIn();
-
-Future<String> signInWithGoogle() async {
-  final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-  final GoogleSignInAuthentication googleSignInAuthentication =
-  await googleSignInAccount.authentication;
-
-  final AuthCredential credential = GoogleAuthProvider.credential(
-    accessToken: googleSignInAuthentication.accessToken,
-    idToken: googleSignInAuthentication.idToken,
-  );
-
-  final UserCredential authResult = await _auth.signInWithCredential(credential);
-  final User user = authResult.user;
-
-  assert(!user.isAnonymous);
-  assert(await user.getIdToken() != null);
-
-  final User currentUser = _auth.currentUser;
-  assert(user.uid == currentUser.uid);
-
-  return 'signInWithGoogle succeeded: $user';
-} 
 
 class RegistrationScreen extends StatefulWidget {
 
@@ -40,8 +16,8 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
 
   final _formKey = GlobalKey<FormState>();
-
-  String email, password;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  String email, password, error;
 
   @override
   Widget build(BuildContext context) {
@@ -132,10 +108,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         final newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
                         if (newUser != null) {
                           Navigator.pushNamed(context, InitialQuestions.id);
+
                         }
                       }
                       catch (e) {
-                        print(e);
+
                       }
                       if (_formKey.currentState.validate()){
                         _formKey.currentState.save();
@@ -185,5 +162,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
       ),
     );
+  }
+
+  Widget emailAlert(e){
+    if (e!=null) {
+      return Container(
+        color: Colors.deepOrange[200],
+        width: double.infinity,
+        padding: EdgeInsets.all(8),
+        child: Row(
+          children: <Widget>[
+            Icon(Icons.error_outline),
+          ],
+        ),
+      );
+    }
+    return SizedBox(height:0);
   }
 }
