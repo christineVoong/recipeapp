@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:recipeapp/Screens/Overview.dart';
+import 'package:recipeapp/Overview.dart';
 import 'package:recipeapp/Screens/initial_questions.dart';
 import 'package:recipeapp/Screens/search_screen.dart';
 import 'Screens/welcome_screen.dart';
