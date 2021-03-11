@@ -13,14 +13,13 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.0),
+    return Scaffold(backgroundColor: Colors.white,
+      body: Padding(padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            //display title
             Row(
               children: <Widget>[
                 Flexible(child: Container(
@@ -40,6 +39,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             SizedBox(
               height: 180.0,
             ),
+            //display login button
             Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0),
               child: Material(
@@ -58,6 +58,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
             ),
+            //display register button
             Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0),
               child: Material(

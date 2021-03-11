@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,28 +14,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   //final _firestore = FirebaseFirestore.instance;
-  final _auth = FirebaseAuth.instance;
-  User loggedInUser;
-  //QuerySnapshot snapshot;
-
-  @override
-  void initState() {
-    super.initState();
-
-    getCurrentUser();
-  }
-
-  void getCurrentUser() {
-    try {
-      final user = _auth.currentUser;
-      if (user != null) {
-        loggedInUser = user;
-        print(loggedInUser.email);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +26,57 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
-            Text("Most Popular this Week"),
+            Text("Check this out!"),
             Row(
               children: <Widget>[
-                Container(),
+                Expanded(
+                  child: Container(
+                    child: GetBuilder<DataController>(
+                      init: DataController(),
+                      builder: (value) {
+                        return FutureBuilder(
+                            future: value.getRandom('RecipeInfo'),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return Center(child: CircularProgressIndicator());
+                              } else {
+                                return new ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: snapshot.data.length,
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      onTap: (){
+                                        Get.to(RecipeScreen(),
+                                          transition: Transition.downToUp,
+                                          arguments: snapshot.data[index],
+                                        );
+                                      },
+                                      child: Container(child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Padding(padding: const EdgeInsets.symmetric(horizontal: 5),
+                                              child: Container(width: 150,
+                                                decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                        fit: BoxFit.cover,
+                                                        image: NetworkImage(snapshot.data[index].data()['image'])
+                                                    )),
+                                              ),),),
+                                          Padding(padding: const EdgeInsets.all(5.0),
+                                            child: Container(
+                                                constraints: BoxConstraints(maxWidth: 100),
+                                                child: Text(snapshot.data[index].data()['name'])),),
+                                        ],)
+                                      ),
+                                    );},
+                                );}
+                            });
+                      }),
+                  ),
+                ),
               ],
             ),
             const Divider(

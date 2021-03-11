@@ -16,10 +16,8 @@ class _InitialQuestionsState extends State<InitialQuestions> {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   User loggedInUser;
-
-  String email;
-  String password;
-  String username;
+  String email, password, username, restrictionChoose;
+  List restriction = ["Vegan", "Vegetarian", "None"];
 
   @override
   void initState() {
@@ -37,11 +35,6 @@ class _InitialQuestionsState extends State<InitialQuestions> {
       print(e);
     }
   }
-
-  String restrictionChoose;
-  List restriction = [
-    "Vegan", "Vegetarian", "None"
-  ];
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -77,18 +70,14 @@ class _InitialQuestionsState extends State<InitialQuestions> {
                       ),
                     )),
                 Flexible(
-                  child: Container(
-                    padding: EdgeInsets.all(10),
+                  child: Container(padding: EdgeInsets.all(10),
                     child: DropdownButton(
                       hint: Text('Select: '),
-                      //dropdownColor: Colors.deepOrange[300],
                       icon: Icon(Icons.arrow_drop_down),
                       iconSize: 35,
                       value: restrictionChoose,
                       onChanged: (newValue){
-                        setState(() {
-                          restrictionChoose = newValue;
-                        });
+                        setState(() {restrictionChoose = newValue;});
                       },
                       items: restriction.map((valueItem){
                         return  DropdownMenuItem(
@@ -130,14 +119,13 @@ class _InitialQuestionsState extends State<InitialQuestions> {
                   height:8
                 ),
                 RaisedButton(
+                  child: Text('Submit'),
                   onPressed: () {
-
                     _firestore.collection('Users').add({
                       'email': loggedInUser.email,
                       'restriction': restrictionChoose,
                       'username': username,
                     });
-
                     try{
                       final user = _auth.currentUser;
                       if (user!=null) {
@@ -147,7 +135,6 @@ class _InitialQuestionsState extends State<InitialQuestions> {
                       print(e);
                     }
                   },
-                  child: Text('Submit'),
                 )
               ],
           ),

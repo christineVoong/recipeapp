@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'file:///C:/Users/user/AndroidStudioProjects/recipeapp/lib/Overview.dart';
+import 'package:recipeapp/Overview.dart';
 import 'package:recipeapp/Functions/googleSignIn.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -13,7 +13,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   final _auth = FirebaseAuth.instance;
   String email, password, error;
 
@@ -105,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       } catch(e) {
                           setState(() {
                             error = e.message;
-                            showAlert(e) ;
+                            //showAlert(e) ;
                           });
                         }
                       },
