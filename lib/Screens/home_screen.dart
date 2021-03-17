@@ -27,10 +27,11 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: <Widget>[
             Text("Check this out!"),
+            SizedBox(height: 8),
             Row(
               children: <Widget>[
                 Expanded(
-                  child: Container(
+                  child: Container(height: 150,
                     child: GetBuilder<DataController>(
                       init: DataController(),
                       builder: (value) {
@@ -39,9 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             builder: (context, snapshot) {
                               if (snapshot.connectionState == ConnectionState.waiting) {
                                 return Center(child: CircularProgressIndicator());
-                              } else {
+                              }
+                              else {
                                 return new ListView.builder(
-                                  shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
                                   itemCount: snapshot.data.length,
                                   itemBuilder: (context, index) {
@@ -52,11 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           arguments: snapshot.data[index],
                                         );
                                       },
-                                      child: Container(child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          Expanded(
+                                      child: Container(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Expanded(
                                             child: Padding(padding: const EdgeInsets.symmetric(horizontal: 5),
                                               child: Container(width: 150,
                                                 decoration: BoxDecoration(
@@ -65,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         image: NetworkImage(snapshot.data[index].data()['image'])
                                                     )),
                                               ),),),
-                                          Padding(padding: const EdgeInsets.all(5.0),
+                                              Padding(padding: const EdgeInsets.all(5.0),
                                             child: Container(
                                                 constraints: BoxConstraints(maxWidth: 100),
                                                 child: Text(snapshot.data[index].data()['name'])),),

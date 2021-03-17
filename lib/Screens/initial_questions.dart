@@ -20,13 +20,16 @@ class _InitialQuestionsState extends State<InitialQuestions> {
   List restriction = ["Vegan", "Vegetarian", "None"];
 
   @override
+  //initialise state
   void initState() {
     super.initState();
+    //calling function
     getCurrentUser();
   }
 
   void getCurrentUser()  {
     try {
+      //gets the current user's email
       final user =  _auth.currentUser;
       if (user != null) {
         loggedInUser = user;

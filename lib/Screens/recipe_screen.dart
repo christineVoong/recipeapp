@@ -46,6 +46,9 @@ class RecipeScreen extends StatefulWidget {
 
 class _RecipeScreenState extends State<RecipeScreen> {
   final _firestore = FirebaseFirestore.instance;
+  final selectedRecipe = Get.arguments;
+
+  List<Widget> ingredients = Get.arguments.data()["ingredients"].map().toList();
 
   void recipeStream() async {
     await for (var snapshot
@@ -58,7 +61,6 @@ class _RecipeScreenState extends State<RecipeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final selectedRecipe = Get.arguments;
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.deepOrangeAccent[200],
@@ -109,10 +111,40 @@ class _RecipeScreenState extends State<RecipeScreen> {
                         SizedBox(height: 8),
                         Container(child: Text("Creator: "+selectedRecipe.data()["creator"])),
                         SizedBox(height: 8),
-                        Container(child:
-                        Center(child: Text(selectedRecipe.data()["description"])),),
+                        Row(children: [
+                          Expanded(
+                            child: Column(children: [
+                              Text(selectedRecipe.data()["servings"],
+                              style: TextStyle(fontSize: 30),),
+                              Text("Servings")
+                            ],),
+                          ),
+                          Expanded(
+                            child: Column(children: [
+                              Text(selectedRecipe.data()["time"],
+                                style: TextStyle(fontSize: 30),),
+                              Text("Time (hh/mm)")
+                            ],),
+                          )
+                        ],),
                         SizedBox(height: 8),
-                        Container()
+                        Text("Description", style: TextStyle(fontWeight: FontWeight.bold),),
+                        Text(selectedRecipe.data()["description"]),
+                        SizedBox(height: 8),
+                        Text("Ingredients", style: TextStyle(fontWeight: FontWeight.bold),),
+                        /*GridView.count(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 3,
+                          mainAxisSpacing: 4,
+                          children: selectedRecipe.data()['ingredients'].map(
+                                (ingredient) => Container(
+                                  child: Text(ingredient)
+                                ),
+                            ).toList(),
+                        ),*/
+                        SizedBox(height: 8),
                       ],
                     ),
                   )
